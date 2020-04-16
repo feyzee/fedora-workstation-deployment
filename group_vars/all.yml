@@ -1,0 +1,19 @@
+---
+# Please adjust following varibles to fit your environment:
+
+temp_dir: /tmp # temporary dir for downoaded files
+user: feyzee # your user
+group: feyzee # your user's primary group
+home_dir: /home/feyzee/ # your user's homedir
+local_soft_dir: /home/feyzee/.local/share/ # where to save local installations of software
+local_bin_dir: /home/feyzee/.local/bin/ # local bin directory for various binaries
+go_dir: /home/feyzee/go/
+go_dev_dir: /home/feyzee/code/go
+code_dir: /home/feyzee/code/
+fedora_repo_dire: /etc/yum.repos.d/
+font_dir: /usr/share/fonts/fira-code-iscript/
+autostart_dir: /home/feyzee/.config/autostart
+
+sys:
+  vm:
+    swappiness: 10

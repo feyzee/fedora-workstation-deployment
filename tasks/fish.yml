@@ -1,0 +1,22 @@
+---
+- name: Copy config.fish to fish configuration directory
+  copy:
+    src: config.fish
+    dest: ~/.config/fish/config.fish
+    owner: { { user } }
+    group: { { group } }
+
+- name: Copy script for path config to home directory
+
+- name: Run command to add paths to fish shell
+  shell: >
+    set -U fish_user_paths { { items } } $fish_user_paths
+  args:
+    executable: /bin/fish
+  with_items:
+    - /sbin/
+    - /usr/sbin/
+    - "{ { home_dir } }/.local/bin"
+
+- name: Install Starship
+  command: "curl -fsSL https://starship.rs/install.sh | sudo bash"
