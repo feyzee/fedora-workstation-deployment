@@ -1,0 +1,48 @@
+---
+- name: Add the Gnome flatpak remote to the system installation
+  flatpak_remote:
+    name: gnome
+    state: present
+    flatpakrepo_url: https://sdk.gnome.org/gnome-apps.flatpakrepo
+
+- name: Add the flathub flatpak repository remote to the user installation
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: user
+
+- name: Add the kde flatpak repository remote to the system installation
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://distribute.kde.org/kdeapps.flatpakrepo
+
+- name: Install the flatpak from the flathub remote system-wide
+  flatpak:
+    name: { { item } }
+    state: present
+    method: user
+  with_items:
+    - org.gtk.Gtk3theme.Adwaita-dark
+    - org.kde.KStyle.Adwaita
+    - org.kde.PlatformTheme.QGnomePlatform
+    - org.kde.WaylandDecoration.QGnomePlatform-decoration
+    - ca.desrt.dconf-editor
+    - org.gnome.Calendar
+    - org.gnome.meld
+    - org.gpodder.gpodder
+    - com.bitwarden.desktop
+    - com.getpostman.Postman
+    - com.github.johnfactotum.Foliate
+    - com.jetbrains.PyCharm-Community
+    - com.sublimetext.three
+    - com.slack.Slack
+    - com.uploadedlobster.peek
+    - org.gimp.GIMP
+    - com.valvesoftware.Steam
+    - io.github.celluloid_player.Celluloid
+    - com.spotify.Client
+    - org.videolan.VLC
+    - org.libreoffice.LibreOffice
+    - org.qbittorrent.qBittorrent

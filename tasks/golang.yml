@@ -1,0 +1,12 @@
+---
+- name: Install Golang
+  dnf:
+    name: golang
+    state: present
+
+- name: Create Go directory
+  file:
+    path: { { go_dir } }
+    state: directory
+    owner: { { user } }
+    group: { { group } }

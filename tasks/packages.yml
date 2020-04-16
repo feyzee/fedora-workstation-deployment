@@ -1,0 +1,109 @@
+---
+- name: Install fish shell
+  package:
+    name: fish
+    state: present
+
+- name: Install packages
+  package:
+    name: { { item } }
+    state: present
+  with_items:
+    - nano
+    - vim
+    - gnome-tweaks
+    - tilix
+    - mpv
+    - unzip
+    - unrar
+    - wl-clipboard
+    - git
+    - htop
+    - ripgrep
+    - gpaste-ui
+    - gnome-shell-extension-gpaste
+    - gnome-shell-extension-pomodoro
+    - chromium
+    - podman
+    - ansible-lint
+    - android-tools
+    - youtube-dl
+
+- name: Install power management tools
+  package:
+    name:
+    state: present
+  with_items:
+    - tlp
+    - tlp-rdw
+    - powertop
+    - smartmontools
+    - tuned
+    - tuned-utils
+    - thermald
+
+- name: Install group packages
+  package:
+    name: { { item } }
+    state: present
+  with_items:
+    - "@virtualization"
+    - "@vagrant"
+
+- name: Install libappindicator for indicator support
+  package:
+    name: { { item } }
+    state: present
+  with_items:
+    - libappindicator
+    - libappindicator-devel
+    - libappindicator-gtk3
+    - perl-Gtk2-AppIndicator
+    - python2-appindicator
+
+- name: Install codecs
+  package:
+    name: { { item } }
+    state: present
+  with_items:
+    - gstreamer-plugins-base
+    - gstreamer1-plugins-base
+    - gstreamer-plugins-bad
+    - gstreamer-plugins-ugly
+    - gstreamer1-plugins-ugly
+    - gstreamer-plugins-good-extras
+    - gstreamer1-plugins-good-extras
+    - gstreamer1-plugins-bad-freeworld
+    - gstreamer-ffmpeg
+    - ffmpeg
+    - ffmpegthumbnailer
+
+- name: Install themes and icon packs
+  package:
+    name: { { item } }
+    state: present
+  with_items:
+    - papirus-icon-theme
+    - f29-backgrounds-animated
+
+- name: Install fonts
+  package:
+    name: { { item } }
+    state: present
+  with_items:
+    - fira-code-fonts
+    - fontconfig-enhanced-defaults
+    - fontconfig-font-replacements
+
+- name: Install croc for sending files
+  command: "curl https://getcroc.schollz.com | bash"
+
+- name: Install Google Chrome
+  package:
+    name: "https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
+    state: present
+
+- name: Remove LibreOffice
+  package:
+    name: libreoffice-core
+    state: absent

@@ -1,0 +1,20 @@
+---
+- name: Fedora Workstation setup
+  hosts: localhost
+  connection: local
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Upgrade all packages
+      package:
+        name: "*"
+        state: latest
+
+    - name: Run all the tasks
+      include_tasks:
+        - tasks/setup.yml
+        - tasks/repo.yml
+        - tasks/rpmfusion.yml
+        - tasks/packages.yml
+        - tasks/system.yml

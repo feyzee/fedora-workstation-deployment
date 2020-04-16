@@ -1,0 +1,43 @@
+---
+- name: Configure RPMFusion repos
+  block:
+    - name: Get Fedora version
+      shell: rpm -E %fedora
+      register: version
+
+    - name: Download RPMFusion package Free
+      get_url: >
+        url=http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ version.stdout }}.noarch.rpm
+        dest=/tmp/rpmfusion-free.rpm
+
+    - name: Download RPMFusion package Non-Free
+      get_url: >
+        url=http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ version.stdout }}.   noarch.rpm
+        dest=/tmp/rpmfusion-nonfree.rpm
+
+    - name: Install RPMFusion package Free
+      package:
+        name: /tmp/rpmfusion-free.rpm
+        state: present
+
+    - name: Install RPMFusion package Non-Free
+      package:
+        name: /tmp/rpmfusion-nonfree.rpm
+        state: present
+
+- name: Copy VSCodium repo to repo directory
+  file:
+    src: vscodium.repo
+    dest: { { fedora_repo_dir } }
+
+- name: Enable Copr Repo for Better Fonts by dawid
+  command: "sudo dnf copr enable -y dawid/better_fonts"
+  creates: /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:dawid:better_fonts.repo
+
+- name: Enable Copr for Fira Code fonts by evana
+  command: "sudo dnf copr enable -y evana/fira-code-fonts"
+  creates: /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:evana:fira-code-fonts.repo
+
+- name: Enable Copr Repo for Gnome with patches by pp3345
+  command: "sudo dnf copr enable -y pp3345/gnome-with-patches"
+  creates: /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:pp3345:gnome-with-patches.repo
