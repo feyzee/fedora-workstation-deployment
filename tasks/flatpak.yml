@@ -44,5 +44,7 @@
     - io.github.celluloid_player.Celluloid
     - com.spotify.Client
     - org.videolan.VLC
-    - org.libreoffice.LibreOffice
     - org.qbittorrent.qBittorrent
+    - org.audacityteam.Audacity
+    - org.audacityteam.Audacity.Codecs
+    - org.gnome.seahorse.Application
