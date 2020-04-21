@@ -6,17 +6,50 @@
     owner: { { user } }
     group: { { group } }
 
-- name: Copy script for path config to home directory
-
 - name: Run command to add paths to fish shell
   shell: >
     set -U fish_user_paths { { items } } $fish_user_paths
   args:
-    executable: /bin/fish
+    executable: { { fish_shell_path } }
   with_items:
-    - /sbin/
-    - /usr/sbin/
+    - "/sbin/"
+    - "/usr/sbin/"
     - "{ { home_dir } }/.local/bin"
 
-- name: Install Starship
-  command: "curl -fsSL https://starship.rs/install.sh | sudo bash"
+- name: Install fisher package manager
+  command: "curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish"
+
+- name: Install OMF
+  command: "curl -L https://get.oh-my.fish | fish"
+
+- name: Install packages for fish shell using fisher
+  command: "fisher add {  { items } }"
+  with_items:
+    - "jethrokuan/z"
+    - "jethrokuan/fzf"
+    - "jorgebucaran/fish-getopts"
+    - "franciscolourenco/done"
+    - "laughedelic/pisces"
+    - "danhper/fish-ssh-agent"
+    - "b4b4r07/enhancd"
+
+- name: Install packages for fish shell using OMF
+  command: "omf install { { items } }"
+  with_items:
+    - "aws"
+    - "bang-bang"
+    - "batman"
+
+- name: Configuration settings for done extension
+  block:
+    - name: turn on done extension
+      shell: >
+        set -U __done_notify_sound 1
+      args:
+        executable: { { fish_shell_path } }
+
+    - name: set done extension notification timer
+      shell: >
+        set -U __done_min_cmd_duration 10
+      args:
+        executable: { { fish_shell_path } }
