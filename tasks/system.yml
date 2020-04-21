@@ -60,3 +60,12 @@
   with_items:
     - files/com.slack.Slack.desktop
     - files/org.gnome.Pomodoro.desktop
+
+- name: Install Starship
+  command: "curl -fsSL https://starship.rs/install.sh | sudo bash"
+
+- name: Change user shell to Fish
+  become: true
+  user:
+    name: { { user } }
+    shell: { { fish_shell_path } }
