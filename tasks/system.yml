@@ -61,6 +61,11 @@
     - files/com.slack.Slack.desktop
     - files/org.gnome.Pomodoro.desktop
 
+- name: Copy .gitconfig to user's home directory
+  copy:
+    src: files/gitconfig
+    dest: "{ { home_dir } }/.gitconfig"
+
 - name: Install Starship
   command: "curl -fsSL https://starship.rs/install.sh | sudo bash"
 

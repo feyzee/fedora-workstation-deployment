@@ -1,0 +1,18 @@
+# DIFF Tool
+[diff]
+    tool = meld
+#[difftool]
+#    prompt = false
+[difftool "meld"]
+    cmd = flatpak run org.gnome.meld "$LOCAL" "$REMOTE"
+
+# MERGE Tool
+[merge]
+    tool = meld
+[mergetool "meld"]
+    cmd = flatpak run org.gnome.meld \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output \"$MERGED\"
+#[mergetool]
+    # don't ask if we want to skip merge
+    #prompt = false
+    # don't create backup *.orig files
+    #keepBackup = false
