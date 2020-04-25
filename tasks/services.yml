@@ -1,0 +1,16 @@
+---
+- name: disable services related to evolution
+  systemd:
+    masked: yes
+    user: yes
+    name: { { item } }
+  with_items:
+    - evolution-addressbook-factory.service
+    - evolution-calendar-factory.service
+    - evolution-source-registry.service
+    - evolution-user-prompter.service
+
+- name: enable fstrim
+  systemd:
+    state: enabled
+    name: fstrim.timer
