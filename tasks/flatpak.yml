@@ -24,27 +24,30 @@
     state: present
     method: user
   with_items:
+    - org.gnome.Calendar
+    - org.gnome.meld
+    - org.gnome.gitg
+    - org.gnome.seahorse.Application
     - org.gtk.Gtk3theme.Adwaita-dark
     - org.kde.KStyle.Adwaita
     - org.kde.PlatformTheme.QGnomePlatform
     - org.kde.WaylandDecoration.QGnomePlatform-decoration
-    - ca.desrt.dconf-editor
-    - org.gnome.Calendar
-    - org.gnome.meld
-    - org.gpodder.gpodder
-    - com.bitwarden.desktop
-    - com.getpostman.Postman
-    - com.github.johnfactotum.Foliate
-    - com.jetbrains.PyCharm-Community
-    - com.sublimetext.three
-    - com.slack.Slack
-    - com.uploadedlobster.peek
     - org.gimp.GIMP
-    - com.valvesoftware.Steam
-    - io.github.celluloid_player.Celluloid
-    - com.spotify.Client
+    - org.gpodder.gpodder
     - org.videolan.VLC
     - org.qbittorrent.qBittorrent
     - org.audacityteam.Audacity
     - org.audacityteam.Audacity.Codecs
-    - org.gnome.seahorse.Application
+    - org.qownnotes.QOwnNotes
+    - org.keepassxc.KeePassXC
+    - com.bitwarden.desktop
+    - com.getpostman.Postman
+    - com.github.johnfactotum.Foliate
+    - com.jetbrains.PyCharm-Community
+    - com.slack.Slack
+    - com.sublimetext.three
+    - com.uploadedlobster.peek
+    - com.valvesoftware.Steam
+    - com.spotify.Client
+    - ca.desrt.dconf-editor
+    - io.github.celluloid_player.Celluloid
