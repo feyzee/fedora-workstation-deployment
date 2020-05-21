@@ -66,6 +66,14 @@
     src: files/gitconfig
     dest: "{ { home_dir } }/.gitconfig"
 
+- name: Install argonaut theme for tilix
+  command: wget -qO ~/.config/tilix/schemes/argonaut.json https://git.io/v7QV5
+
+- name: Clear GNOME tracker cache file
+  file:
+    path: ~/.cache/tracker
+    state: absent
+
 - name: Install Starship
   command: "curl -fsSL https://starship.rs/install.sh | sudo bash"
 
