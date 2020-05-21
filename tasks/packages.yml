@@ -19,15 +19,35 @@
     - wl-clipboard
     - git
     - htop
+    - imwheel
     - ripgrep
-    - gpaste-ui
-    - gnome-shell-extension-gpaste
     - gnome-shell-extension-pomodoro
     - chromium
     - podman
     - ansible-lint
     - android-tools
     - youtube-dl
+    - emacs
+    - timew
+    - task
+    - syncthing
+    - fzf
+    - bat
+    - glances
+    - bmon
+    - httpie
+    - awscli
+    - dnf-plugin-system-upgrade
+    - gedit-plugins
+    - jpegoptim
+    - optipng
+    - nodejs
+    - ImageMagick
+    - seahorse-nautilus
+    - nautilus-search-tool
+    - nautilus-image-converter
+    - vulkan-loader
+    - vulkan-loader.i686
 
 - name: Install power management tools
   package:
@@ -41,6 +61,7 @@
     - tuned
     - tuned-utils
     - thermald
+    - tuned-profiles-realtime
 
 - name: Install group packages
   package:
@@ -107,3 +128,39 @@
   package:
     name: libreoffice-core
     state: absent
+
+- name: Remove unwanted packages
+  package:
+    name: { { item } }
+    state: absent
+  with_items:
+    - evolution
+    - simple-scan
+    - totem
+    - gnome-maps
+    - gnome-online-miners
+    - gnome-calendar
+    - gnome-software
+    - gnome-contacts
+    - gnome-dictionary
+    - gnome-user-share
+    - yelp
+
+- name: Ensure core GNOME packages are present
+  package:
+    name: { { item } }
+    state: present
+  with_items:
+    - eog
+    - evince
+    - evolution-data-server
+    - flatpak
+    - gdm
+    - gnome-keyring
+    - gnome-menus
+    - gnome-screenshot
+    - gnome-shell
+    - gnome-terminal
+    - gnome-tweaks
+    - nautilus
+    - redhat-menus
