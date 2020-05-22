@@ -33,26 +33,6 @@
         value: "7"
         state: present
 
-- name: Install FiraCode iScript fonts
-  block:
-    - name: Create a directory for the fonts
-      file:
-        path: { { font_dir } }
-        state: directory
-      register: firacode
-
-    - name: Copy FiraCode iScript fonts to root level font directory
-      copy:
-        src: { { item } }
-        dest: { { firacode.stdout } }
-      with_items:
-        - files/FiraCodeiScript-Bold.ttf
-        - files/FiraCodeiScript-Italic.ttf
-        - files/FiraCodeiScript-Regular.ttf
-
-    - name: Update font cache
-      command: /usr/bin/fc-cache-64 -v
-
 - name: Add Slack and GNOME Pomodoro to autostart.
   copy:
     src: { { item } }
