@@ -82,3 +82,13 @@
   user:
     name: { { user } }
     shell: { { fish_shell_path } }
+
+- name: config imwheel
+  block:
+    copy:
+      src: "files/imwheel.service"
+      dest: { { systemd_dir } }
+
+    name: reload systemd configuration
+    systemd:
+      daemon_reload: yes
