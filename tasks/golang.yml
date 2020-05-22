@@ -10,3 +10,9 @@
     state: directory
     owner: { { user } }
     group: { { group } }
+
+- name: Configure GOPATH
+  shell: >
+    set -U $GOPATH { { go_dir } }:{ { go_dev_dir } }
+  args:
+    executable: { { fish_shell_path } }
