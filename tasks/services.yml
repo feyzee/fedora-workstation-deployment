@@ -10,7 +10,27 @@
     - evolution-source-registry.service
     - evolution-user-prompter.service
 
+- name: disable unwanted services
+  systemd:
+    state: disabled
+    name: { { item } }
+  with_items:
+    - tracker-store
+    - gvfs-goa-volume-monitor
+
 - name: enable fstrim
   systemd:
     state: enabled
     name: fstrim.timer
+
+- name: config imwheel
+  block:
+    copy:
+      src: "files/imwheel.service"
+      dest: { { systemd_dir } }
+
+    name: enable imwheel service
+    systemd:
+      daemon_reload: yes
+      state: enabled
+      name: imwheel.service
