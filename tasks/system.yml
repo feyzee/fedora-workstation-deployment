@@ -72,3 +72,16 @@
     name: reload systemd configuration
     systemd:
       daemon_reload: yes
+
+- name: Install JetBrains Mono Font
+  block:
+    get_url: >
+      url= { { jetbrains_mono_url } }
+      dest=/tmp/jetbrains-mono.zip
+
+    unarchive:
+      src: /tmp/jetbrains-mono.zip
+      dest: /usr/share/fonts/
+      remote_src: yes
+
+    command: fc-cache -v

@@ -12,9 +12,10 @@ go_dir: /home/feyzee/go/
 go_dev_dir: /home/feyzee/code/go
 code_dir: /home/feyzee/code/
 fedora_repo_dir: /etc/yum.repos.d/
-font_dir: /usr/share/fonts/fira-code-iscript/
+font_dir: /usr/share/fonts/
 autostart_dir: /home/feyzee/.config/autostart
 systemd_dir: /etc/systemd/system/
+jetbrains_mono_url: "https://download.jetbrains.com/fonts/JetBrainsMono-1.0.3.zip"
 
 sys:
   vm:
