@@ -36,7 +36,6 @@
     - glances
     - bmon
     - httpie
-    - awscli
     - dnf-plugin-system-upgrade
     - gedit-plugins
     - jpegoptim
@@ -48,6 +47,9 @@
     - nautilus-image-converter
     - vulkan-loader
     - vulkan-loader.i686
+    - awscli
+    - azure-cli
+    - google-cloud-sdk
 
 - name: Install power management tools
   package:
