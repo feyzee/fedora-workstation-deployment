@@ -23,37 +23,43 @@
     - ripgrep
     - gnome-shell-extension-pomodoro
     - chromium
-    - podman
-    - ansible-lint
     - android-tools
     - youtube-dl
     - emacs
     - timew
-    - task
+    -
     - syncthing
     - fzf
     - bat
     - glances
     - bmon
-    - httpie
     - dnf-plugin-system-upgrade
     - gedit-plugins
     - jpegoptim
     - optipng
-    - nodejs
     - ImageMagick
     - seahorse-nautilus
     - nautilus-search-tool
     - nautilus-image-converter
     - vulkan-loader
     - vulkan-loader.i686
+
+- name: Developer tools
+  dnf:
+    name: { { item } }
+    state: present
+  with_items:
     - awscli
     - azure-cli
     - google-cloud-sdk
+    - httpie
+    - ansible-lint
+    - podman
+    - nodejs
 
 - name: Install power management tools
   package:
-    name:
+    name: { { item } }
     state: present
   with_items:
     - tlp
