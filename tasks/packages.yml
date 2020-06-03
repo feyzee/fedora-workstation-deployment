@@ -11,6 +11,8 @@
   with_items:
     - nano
     - vim
+    - neovim
+    - kakoune
     - gnome-tweaks
     - tilix
     - mpv
