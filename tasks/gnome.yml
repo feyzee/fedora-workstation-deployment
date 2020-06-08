@@ -1,0 +1,50 @@
+---
+- name: update gnome dconf settings
+  dconf:
+    key: "{{item.key}}"
+    value: "{{item.value}}"
+  loop:
+    - { key: "/org/gnome/desktop/interface/clock-show-date", value: "true" }
+    - { key: "/org/gnome/desktop/interface/clock-show-weekday", value: "true" }
+    - { key: "/org/gnome/desktop/interface/clock-format", value: "12h" }
+    - { key: "/org/gnome/desktop/interface/cursor-blink", value: "false" }
+    - { key: "/org/gnome/desktop/interface/gtk-theme", value: "'Adwaita-dark'" }
+    - { key: "/org/gnome/desktop/interface/icon-theme", value: "'Papirus-Dark'" }
+    - { key: "/org/gnome/desktop/interface/show-battery-percentage", value: "true" }
+    - { key: "/org/gnome/desktop/background/picture-uri", value: "'file:///usr/share/backgrounds/f32/default/f32-animated.xml'" }
+    - { key: "/org/gnome/desktop/background/picture-options", value: "'zoom'" }
+    - { key: "/org/gnome/desktop/privacy/old-files-age", value: "uint32 30" }
+    - { key: "/org/gnome/desktop/privacy/remove-old-trash-files", value: "true" }
+    - { key: "/org/gnome/desktop/wm/preferences/audible-bell", value: "false" }
+    - { key: "/org/gnome/desktop/wm/preferences/visual-bell", value: "frame-flash" }
+    - { key: "/org/gnome/settings-daemon/plugins/color/night-light-enabled", value: "true" }
+    - { key: "/org/gnome/settings-daemon/plugins/color/night-light-temperature", value: "uint32 2700" }
+    - { key: "/org/gnome/settings-daemon/plugins/xsettings/antialiasing", value: "'rgba'" }
+    - { key: "/org/gnome/settings-daemon/plugins/xsettings/hinting", value: "'slight'" }
+    - { key: "/org/gnome/mutter/center-new-windows", value: "true" }
+    - { key: "/org/gnome/desktop/peripherals/touchpad/tap-to-click", value: "true" }
+    - { key: "/org/gnome/desktop/peripherals/touchpad/two-finger-scrolling-enabled", value: "true" }
+    - { key: "/org/gnome/desktop/sound/allow-volume-above-100-percent", value: "true" }
+
+- name: change gedit settings
+  block:
+    file:
+      path: "{{home_dir}}/.local/share/gedit/styles/"
+      state: directory
+    get_url: >
+      url=https://raw.githubusercontent.com/dracula/gedit/master/dracula.xml
+      dest="{{home_dir}}/.local/share/gedit/styles/dracula.xml"
+    dconf:
+      key: "{{item.key}}"
+      value: "{{item.value}}"
+    loop:
+      - { key: "/org/gnome/gedit/preferences/editor/auto-save", value: "true" }
+      - { key: "/org/gnome/gedit/preferences/editor/auto-save-interval", value: "uint32 5" }
+      - { key: "/org/gnome/gedit/preferences/editor/background-pattern", value: "'grid'" }
+      - { key: "/org/gnome/gedit/preferences/editor/editor-font", value: "'JetBrains Mono Bold 14'" }
+      - { key: "/org/gnome/gedit/preferences/editor/insert-spaces", value: "true" }
+      - { key: "/org/gnome/gedit/preferences/editor/scheme", value: "'dracula'" }
+      - { key: "/org/gnome/gedit/preferences/editor/tabs-size", value: "uint32 4" }
+      - { key: "/org/gnome/gedit/preferences/editor/wrap-last-split-mode", value: "'word'" }
+      - { key: "/org/gnome/gedit/preferences/ui/show-tabs-mode", value: "'auto'" }
+      - { key: "/org/gnome/gedit/preferences/plugins/active-plugins", value: "['terminal', 'time', 'drawspaces', 'commander', 'spell', 'snippets', 'colorpicker', 'smartspaces', 'bracketcompletion', 'wordcompletion', 'docinfo', 'externaltools', 'quickhighlight', 'multiedit', 'git', 'joinlines', 'modelines', 'findinfiles', 'bookmarks', 'filebrowser', 'codecomment', 'sessionsaver']" }
