@@ -18,3 +18,4 @@
         - tasks/rpmfusion.yml
         - tasks/packages.yml
         - tasks/system.yml
+        - tasks/gnome.yml
