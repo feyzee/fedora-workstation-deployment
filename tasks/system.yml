@@ -1,39 +1,8 @@
 ---
-- name: Night Light settings
-  block:
-    - name: Enable Night Light
-      dconf:
-        key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
-        value: true
-        state: present
-
-    - name: Set Night Light Temperature
-      dconf:
-        key: /org/gnome/settings-daemon/plugins/color/night-light-temperature
-        value: uint32 4991
-        state: present
-
-    - name: Set Night Light Schedule From
-      dconf:
-        key: /org/gnome/settings-daemon/plugins/color/night-light-schedule-from
-        value: "18"
-        state: present
-
-    - name: Set Night Light Schedule To
-      dconf:
-        key: /org/gnome/settings-daemon/plugins/color/night-light-schedule-to
-        value: "5"
-        state: present
-
 - name: Copy .gitconfig to user's home directory
   copy:
     src: files/gitconfig
     dest: "{ { home_dir } }/.gitconfig"
-
-- name: Clear GNOME tracker cache file
-  file:
-    path: ~/.cache/tracker
-    state: absent
 
 - name: Change user shell to Fish
   become: true
@@ -41,26 +10,31 @@
     name: { { user } }
     shell: { { fish_shell_path } }
 
-- name: config imwheel
+- name: Golang configuration
   block:
-    copy:
-      src: "files/imwheel.service"
-      dest: { { systemd_dir } }
+    - name: Create Go directory
+      file:
+        path: { { go_dir } }
+        state: directory
+        owner: { { user } }
+        group: { { group } }
 
-    name: reload systemd configuration
-    systemd:
-      daemon_reload: yes
+    - name: Configure GOPATH
+      shell: >
+        set -U $GOPATH { { go_dir } }:{ { go_dev_dir } }
+      args:
+        executable: { { fish_shell_path } }
 
 - name: Install JetBrains Mono Font
-  become: true
   block:
-    get_url: >
-      url= { { jetbrains_mono_url } }
-      dest=/tmp/jetbrains-mono.zip
+    - get_url: >
+        url= { { jetbrains_mono_url } }
+        dest=/tmp/jetbrains-mono.zip
 
-    unarchive:
-      src: /tmp/jetbrains-mono.zip
-      dest: /usr/share/fonts/
-      remote_src: yes
+    - become: true
+      unarchive:
+        src: /tmp/jetbrains-mono.zip
+        dest: /usr/share/fonts/
+        remote_src: yes
 
-    command: fc-cache -v
+    - command: fc-cache -v
