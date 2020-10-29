@@ -1,12 +1,4 @@
 ---
-- name: Create a user for work related usage.
-  user:
-    name: Work
-    comment: user for work related usage
-    password: "$6$HEu.SbtXrbKF2kLj$v3CWlQH0uI/ZW3EnOgrXmPXB7aEWaBhZXes0vaOXuLfeF.KkrGOUxNMzzvLkciNjRtK4dXmtiYOgQ/E5yS9D2/"
-    shell: /bin/fish
-    state: present
-
 - name: Night Light settings
   block:
     - name: Enable Night Light
@@ -30,32 +22,18 @@
     - name: Set Night Light Schedule To
       dconf:
         key: /org/gnome/settings-daemon/plugins/color/night-light-schedule-to
-        value: "7"
+        value: "5"
         state: present
-
-- name: Add Slack and GNOME Pomodoro to autostart.
-  copy:
-    src: { { item } }
-    dest: { { autostart_dir } }
-  with_items:
-    - files/com.slack.Slack.desktop
-    - files/org.gnome.Pomodoro.desktop
 
 - name: Copy .gitconfig to user's home directory
   copy:
     src: files/gitconfig
     dest: "{ { home_dir } }/.gitconfig"
 
-- name: Install argonaut theme for tilix
-  command: wget -qO ~/.config/tilix/schemes/argonaut.json https://git.io/v7QV5
-
 - name: Clear GNOME tracker cache file
   file:
     path: ~/.cache/tracker
     state: absent
-
-- name: Install Starship
-  command: "curl -fsSL https://starship.rs/install.sh | sudo bash"
 
 - name: Change user shell to Fish
   become: true
@@ -74,6 +52,7 @@
       daemon_reload: yes
 
 - name: Install JetBrains Mono Font
+  become: true
   block:
     get_url: >
       url= { { jetbrains_mono_url } }
