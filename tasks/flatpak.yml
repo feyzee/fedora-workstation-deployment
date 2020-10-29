@@ -27,7 +27,6 @@
     - org.keepassxc.KeePassXC
     - com.bitwarden.desktop
     - com.github.johnfactotum.Foliate
-    - com.jetbrains.PyCharm-Community
     - com.slack.Slack
     - com.valvesoftware.Steam
     - com.valvesoftware.Steam.Utility.protontricks
