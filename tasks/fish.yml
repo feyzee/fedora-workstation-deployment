@@ -7,7 +7,7 @@
     group: { { group } }
 
 - name: Run command to add paths to fish shell
-  shell: >
+  shell: |
     set -U fish_user_paths { { items } } $fish_user_paths
   args:
     executable: { { fish_shell_path } }
