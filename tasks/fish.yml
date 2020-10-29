@@ -1,4 +1,7 @@
 ---
+- name: Install Starship
+  command: "curl -fsSL https://starship.rs/install.sh | sudo bash"
+
 - name: Copy config.fish to fish configuration directory
   copy:
     src: config.fish
@@ -32,6 +35,7 @@
     - "laughedelic/pisces"
     - "danhper/fish-ssh-agent"
     - "b4b4r07/enhancd"
+    - "wfxr/forgit"
 
 - name: Install packages for fish shell using OMF
   command: "omf install { { items } }"
