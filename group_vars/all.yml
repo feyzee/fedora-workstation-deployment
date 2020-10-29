@@ -16,6 +16,8 @@ font_dir: /usr/share/fonts/
 autostart_dir: /home/feyzee/.config/autostart
 systemd_dir: /etc/systemd/system/
 jetbrains_mono_url: "https://download.jetbrains.com/fonts/JetBrainsMono-1.0.3.zip"
+terraform_url: "https://releases.hashicorp.com/terraform/0.13.5/terraform_0.13.5_linux_amd64.zip"
+terraform_sha256_url: "https://releases.hashicorp.com/terraform/0.13.5/terraform_0.13.5_SHA256SUMS"
 
 sys:
   vm:
