@@ -1,0 +1,13 @@
+---
+- name: PIP packages
+  pip:
+    name:
+      - boto3
+      - botocore
+      - cfn-lint
+      - flake8
+      - autopep8
+      - pylint
+      - pytest
+    extra_args: --user
+    state: present
