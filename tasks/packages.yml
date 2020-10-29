@@ -1,174 +1,165 @@
 ---
-- name: Install fish shell
-  package:
-    name: fish
-    state: present
+- name: Installing packages
+  become: true
+  block:
+    - dnf:
+        name: { { item } }
+        state: present
+      with_items:
+        - fish
+        - gnome-tweaks
+        - mpv
+        - unzip
+        - unrar
+        - wl-clipboard
+        - chromium-freeworld
+        - android-tools
+        - task
+        - dnf-plugin-system-upgrade
+        - vulkan-loader
 
-- name: Install packages
-  package:
-    name: { { item } }
-    state: present
-  with_items:
-    - nano
-    - vim
-    - neovim
-    - kakoune
-    - gnome-tweaks
-    - tilix
-    - mpv
-    - unzip
-    - unrar
-    - wl-clipboard
-    - git
-    - htop
-    - imwheel
-    - ripgrep
-    - gnome-shell-extension-pomodoro
-    - chromium-freeworld
-    - android-tools
-    - youtube-dl
-    - emacs
-    - timew
-    - syncthing
-    - fzf
-    - bat
-    - glances
-    - bmon
-    - dnf-plugin-system-upgrade
-    - gedit
-    - gedit-plugins
-    - jpegoptim
-    - optipng
-    - ImageMagick
-    - seahorse-nautilus
-    - nautilus-search-tool
-    - nautilus-image-converter
-    - vulkan-loader
-    - vulkan-loader.i686
+    - name: Utilities
+      dnf:
+        name: { { item } }
+        state: present
+      with_items:
+        - vim
+        - kitty
+        - htop
+        - powertop
+        - fzf
+        - bat
+        - fd-find
+        - ripgrep
+        - gnome-shell-extension-pomodoro
 
-- name: Developer tools
-  dnf:
-    name: { { item } }
-    state: present
-  with_items:
-    - awscli
-    - azure-cli
-    - google-cloud-sdk
-    - httpie
-    - ansible-lint
-    - podman
-    - nodejs
+    - name: Developer tools
+      dnf:
+        name: { { item } }
+        state: present
+      with_items:
+        - httpie
+        - ansible-lint
+        - podman
+        - nodejs
+        - golang
+        - golang-godoc
+        - code
+        - python-pip
 
-- name: Install power management tools
-  package:
-    name: { { item } }
-    state: present
-  with_items:
-    - tlp
-    - tlp-rdw
-    - powertop
-    - smartmontools
-    - tuned
-    - tuned-utils
-    - thermald
-    - tuned-profiles-realtime
+    - name: Install Terraform
+      block:
+        - name: Download tflint
+          shell: |
+            curl -s https://api.github.com/repos/terraform-linters/tflint/releases/latest | awk -F': '  '/    browser_download_url/ && /linux_amd64.zip/ {gsub(/"/, "", $(NF)); system("curl -LO " $(NF))}
+          args:
+            chdir: "/tmp/"
 
-- name: Install group packages
-  package:
-    name: { { item } }
-    state: present
-  with_items:
-    - "@virtualization"
-    - "@vagrant"
+        - name: Unzip and copy to path
+          unarchive:
+            src: { { items } }
+            dest: { { local_bin_dir } }
+            remote_src: yes
+          with_items:
+            - { { terraform_url } }
+            - "/tmp/tflint_linux_amd64.zip"
 
-- name: Install libappindicator for indicator support
-  package:
-    name: { { item } }
-    state: present
-  with_items:
-    - libappindicator
-    - libappindicator-devel
-    - libappindicator-gtk3
-    - perl-Gtk2-AppIndicator
-    - python2-appindicator
+    - name: Install group packages
+      dnf:
+        name: { { item } }
+        state: present
+      with_items:
+        - "@virtualization"
+        - "@vagrant"
 
-- name: Install codecs
-  package:
-    name: { { item } }
-    state: present
-  with_items:
-    - gstreamer1-plugins-base
-    - gstreamer-plugins-bad
-    - gstreamer-plugins-ugly
-    - gstreamer1-plugins-ugly
-    - gstreamer1-plugins-good-extras
-    - gstreamer1-plugins-bad-freeworld
-    - gstreamer-ffmpeg
-    - ffmpeg
-    - ffmpegthumbnailer
+    - name: Install libappindicator for indicator support
+      dnf:
+        name: { { item } }
+        state: present
+      with_items:
+        - libappindicator
+        - libappindicator-devel
+        - libappindicator-gtk3
+        - perl-Gtk2-AppIndicator
+        - python2-appindicator
 
-- name: Install themes and icon packs
-  package:
-    name: { { item } }
-    state: present
-  with_items:
-    - papirus-icon-theme
-    - f29-backgrounds-animated
+    - name: Install codecs
+      dnf:
+        name: { { item } }
+        state: present
+      with_items:
+        - gstreamer1-plugins-base
+        - gstreamer-plugins-bad
+        - gstreamer-plugins-ugly
+        - gstreamer1-plugins-ugly
+        - gstreamer1-plugins-good-extras
+        - gstreamer1-plugins-bad-freeworld
+        - gstreamer-ffmpeg
+        - ffmpeg
+        - ffmpegthumbnailer
 
-- name: Install fonts
-  package:
-    name: { { item } }
-    state: present
-  with_items:
-    - fira-code-fonts
-    - fontconfig-enhanced-defaults
-    - fontconfig-font-replacements
+    - name: Install themes and icon packs
+      dnf:
+        name: { { item } }
+        state: present
+      with_items:
+        - papirus-icon-theme
 
-- name: Install croc for sending files
-  command: "curl https://getcroc.schollz.com | bash"
+    - name: Install fonts
+      dnf:
+        name: { { item } }
+        state: present
+      with_items:
+        - fira-code-fonts
+        - fontconfig-enhanced-defaults
+        - fontconfig-font-replacements
 
-- name: Install Google Chrome
-  package:
-    name: "https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
-    state: present
+    - name: Install Google Chrome
+      dnf:
+        name: "https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
+        state: present
 
-- name: Remove LibreOffice
-  package:
-    name: libreoffice-core
-    state: absent
+    - name: Remove LibreOffice
+      dnf:
+        name: libreoffice-core
+        state: absent
 
-- name: Remove unwanted packages
-  package:
-    name: { { item } }
-    state: absent
-  with_items:
-    - evolution
-    - simple-scan
-    - totem
-    - gnome-maps
-    - gnome-online-miners
-    - gnome-calendar
-    - gnome-software
-    - gnome-contacts
-    - gnome-dictionary
-    - gnome-user-share
-    - yelp
+    - name: Remove unwanted packages
+      dnf:
+        name: { { item } }
+        state: absent
+      with_items:
+        - evolution
+        - simple-scan
+        - totem
+        - gnome-maps
+        - gnome-online-miners
+        - gnome-calendar
+        - gnome-software
+        - gnome-contacts
+        - gnome-dictionary
+        - gnome-user-share
+        - yelp
 
-- name: Ensure core GNOME packages are present
-  package:
-    name: { { item } }
-    state: present
-  with_items:
-    - eog
-    - evince
-    - evolution-data-server
-    - flatpak
-    - gdm
-    - gnome-keyring
-    - gnome-menus
-    - gnome-screenshot
-    - gnome-shell
-    - gnome-terminal
-    - gnome-tweaks
-    - nautilus
-    - redhat-menus
+    - name: Autoremove unneeded packages installed as dependencies
+      dnf:
+        autoremove: yes
+
+    - name: Ensure core GNOME packages are present
+      dnf:
+        name: { { item } }
+        state: present
+      with_items:
+        - eog
+        - evince
+        - evolution-data-server
+        - flatpak
+        - gdm
+        - gnome-keyring
+        - gnome-menus
+        - gnome-screenshot
+        - gnome-shell
+        - gnome-terminal
+        - gnome-tweaks
+        - nautilus
+        - redhat-menus
