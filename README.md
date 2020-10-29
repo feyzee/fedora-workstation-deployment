@@ -1,4 +1,4 @@
 # fedora-deployment
-configuring fedora after instllation
+configuring fedora after installation
 
 # Work in progress
