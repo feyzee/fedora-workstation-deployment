@@ -1,5 +1,6 @@
 ---
 - name: disable services related to evolution
+  become: true
   systemd:
     masked: yes
     user: yes
@@ -9,8 +10,11 @@
     - evolution-calendar-factory.service
     - evolution-source-registry.service
     - evolution-user-prompter.service
+    - cups.service
+    - avahi-daemon.service
 
 - name: disable unwanted services
+  become: true
   systemd:
     state: disabled
     name: { { item } }
@@ -19,18 +23,7 @@
     - gvfs-goa-volume-monitor
 
 - name: enable fstrim
+  become: true
   systemd:
     state: enabled
     name: fstrim.timer
-
-- name: config imwheel
-  block:
-    copy:
-      src: "files/imwheel.service"
-      dest: { { systemd_dir } }
-
-    name: enable imwheel service
-    systemd:
-      daemon_reload: yes
-      state: enabled
-      name: imwheel.service
