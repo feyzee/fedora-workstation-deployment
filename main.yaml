@@ -11,26 +11,19 @@
         src: "files/dnf.conf"
         dest: "/etc/dnf/dnf.conf"
 
-    # - name: Upgrade all packages
-    #   become: true
-    #   dnf:
-    #     name: "*"
-    #     state: latest
-
-    # - name: Install git
-    #   become: true
-    #   dnf:
-    #     name: git
-    #     state: latest
+    - name: Upgrade all packages
+      become: true
+      dnf:
+        name: "*"
+        state: latest
 
     - name: Run all the tasks
       include_tasks:
         - tasks/repos.yml
         - tasks/packages.yml
-        - tasks/system.yml
-        - tasks/gnome.yml
-        - tasks/fish.yml
         - tasks/flatpak.yml
-        - tasks/python.yml
+        - tasks/fish.yml
+        - tasks/system.yml
         - tasks/services.yml
         - tasks/gnome.yml
+        - tasks/python.yml
