@@ -67,3 +67,9 @@
             key: https://raw.githubusercontent.com/dracula/kitty/master/diff.conf,
             value: "~/.config/kitty/diff.conf",
           }
+
+- name: Create a new Work user
+  user:
+    name: Work
+    password: { { work_user_passwd } }
+    shell: { { fish_shell_path } }
