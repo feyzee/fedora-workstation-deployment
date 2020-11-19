@@ -1,7 +1,7 @@
 ---
-# Please adjust following varibles to fit your environment:
+# Please adjust following variables to fit your environment:
 
-temp_dir: /tmp # temporary dir for downoaded files
+temp_dir: /tmp # temporary dir for downloaded files
 user: feyzee # your user
 group: feyzee # your user's primary group
 home_dir: /home/feyzee/ # your user's homedir
