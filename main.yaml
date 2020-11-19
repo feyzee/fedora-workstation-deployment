@@ -11,17 +11,17 @@
         src: "files/dnf.conf"
         dest: "/etc/dnf/dnf.conf"
 
-    - name: Upgrade all packages
-      become: true
-      dnf:
-        name: "*"
-        state: latest
+    # - name: Upgrade all packages
+    #   become: true
+    #   dnf:
+    #     name: "*"
+    #     state: latest
 
-    - name: Install git
-      become: true
-      dnf:
-        name: git
-        state: latest
+    # - name: Install git
+    #   become: true
+    #   dnf:
+    #     name: git
+    #     state: latest
 
     - name: Run all the tasks
       include_tasks:
