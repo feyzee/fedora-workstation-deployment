@@ -79,8 +79,8 @@
       url=https://raw.githubusercontent.com/dracula/gedit/master/dracula.xml
       dest="{{home_dir}}/.local/share/gedit/styles/dracula.xml"
     dconf:
-      key: "{{item.key}}"
-      value: "{{item.value}}"
+      key: "{ { item.key } }"
+      value: "{ { item.value } }"
     loop:
       - { key: "/org/gnome/gedit/preferences/editor/auto-save", value: "true" }
       - {

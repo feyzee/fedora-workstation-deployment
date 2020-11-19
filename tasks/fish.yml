@@ -8,7 +8,7 @@
 
 - name: Run command to add paths to fish shell
   shell: |
-    set -U fish_user_paths { { items } } $fish_user_paths
+    set -U fish_user_paths { { item } } $fish_user_paths
   args:
     executable: { { fish_shell_path } }
   with_items:
@@ -20,13 +20,22 @@
   command: "curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish"
 
 - name: Install packages for fish shell using fisher
-  command: "fisher add {  { items } }"
+  command: "fisher install {  { item } }"
   with_items:
-    - "jethrokuan/z"
-    - "jethrokuan/fzf"
-    - "jorgebucaran/fish-getopts"
-    - "franciscolourenco/done"
-    - "laughedelic/pisces"
-    - "danhper/fish-ssh-agent"
+    - "jorgebucaran/bax.fish"
     - "b4b4r07/enhancd"
+    - "franciscolourenco/done"
+    - "jorgebucaran/fish-getopts"
+    - "danhper/fish-ssh-agent"
     - "wfxr/forgit"
+    - "jethrokuan/fzf"
+    - "laughedelic/pisces"
+    - "jethrokuan/z"
+
+- name: Download fish shell completions
+  command: "curl { { item.key } } --create-dirs -sLo ~/.config/fish/functions/{ { item.value } }"
+  with_items:
+    - {
+        key: https://raw.githubusercontent.com/openSUSE/libpod/70fb22c9f70d1549aeb71e96e936e8e4e9f11c8a/completions/fish/podman.fish,
+        value: podman.fish,
+      }
