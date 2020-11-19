@@ -25,16 +25,45 @@
       args:
         executable: { { fish_shell_path } }
 
-- name: Install JetBrains Mono Font
+- name: Install fonts
   block:
-    - get_url: >
-        url= { { jetbrains_mono_url } }
-        dest=/tmp/jetbrains-mono.zip
+    - name: Download fonts
+      get_url: >
+        url={ { item.key } }
+        dest="/tmp/{ { item.value } }"
+      with_items:
+        - { key: jetbrains_mono_url, value: jetbrains-mono.zip }
+        - { key: iosevka_url, value: iosevka.zip }
+        - { key: iosevka_term_url, value: iosevka_term.zip }
+        - { key: iosevka_aile_url, value: iosevka_aile.zip }
 
-    - become: true
+    - name: Copy fonts
+      become: true
       unarchive:
-        src: /tmp/jetbrains-mono.zip
-        dest: /usr/share/fonts/
+        src: "/tmp/{ { item } }"
+        dest: "/usr/share/fonts/"
         remote_src: yes
+      with_items:
+        - jetbrains-mono.zip
+        - iosevka.zip
+        - iosevka_term.zip
+        - iosevka_aile.zip
 
     - command: fc-cache -v
+
+- name: Configure Kitty terminal
+  block:
+    - file:
+        src: files/kitty.conf
+        dest: "~/.config/kitty/kitty.conf"
+
+    - command: "curl { { item.key } } --create-dirs -sLo { { item.value } }"
+      with_items:
+        - {
+            key: https://raw.githubusercontent.com/dracula/kitty/master/dracula.conf,
+            value: "~/.config/kitty/dracula.conf",
+          }
+        - {
+            key: https://raw.githubusercontent.com/dracula/kitty/master/diff.conf,
+            value: "~/.config/kitty/diff.conf",
+          }
